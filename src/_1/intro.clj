@@ -59,3 +59,27 @@ Person{"Raymond", "Tay"}
 
 (conj #{} "hi" "there" "this is" "raymond" "tay" ".")
 
+// Now that you can build new sets, you need some way to keep track 
+// of the current set of visitors. Clojure provides several reference types
+// for this purpose
+(atom initial-state)
+
+// e.g. (atom (conj #{} "hi" "there"))
+
+// 'def' is like 'defn' but more general. A def can define functions or dat.
+// Use atom to create an atom, and use def to bind the atom to the name visitors
+(def visitors (atom #{} "john" "doe"))
+
+// To update a refernence, you must use a function such as swap!
+// the form is as follows: 
+// (swap! r update-fn & args) 
+// where 'update-fn' applies to referenjce 'r', with optional 'args' if necessary. 
+// below is an example of swapping the variable 'visitors'
+
+// e.g. assume we have the following :
+// #> (def visitors (atom #{} "john" "doe")
+// #> (swap! visitors conj "foo")
+// #> visitors // returns "foo"
+
+
+
