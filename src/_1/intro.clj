@@ -24,3 +24,7 @@ Person{"Raymond", "Tay"}
 // + The whole language is therem, all the time. Paul Graham's essay "Revenge of the nerds"
 //   explains why this concept is so powerful
 
+
+// here's how to define a function named "hello-world"
+(defn hello-world [username] (println (format "Hello, %" username)))
+
