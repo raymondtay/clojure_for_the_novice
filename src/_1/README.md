@@ -17,4 +17,16 @@ protected shared state with transactions. This is much more productive, because 
 programmers have a good understanding of transactions based on experiences with databases.
 ```
 
+## Reading the source code for Clojure programs
+
+On page 20 of the book, it is written
+```
+Much of Clojure is written in Clojure, and it is instructuve to read the source
+code. You can view the source of a Clojure function using the repl library.
+i.e. (clojure.repl/source a-symbol)
+
+(use 'clojure.repl)
+(source identity)
+
+```
 
