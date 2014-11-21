@@ -81,5 +81,7 @@ Person{"Raymond", "Tay"}
 // #> (swap! visitors conj "foo")
 // #> visitors // returns "foo"
 
+// If you want to extract the value out from the reference, you use 'deref' or '@'
+// e.g. (deref visitors) or @visitors
 
 
