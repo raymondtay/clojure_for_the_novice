@@ -41,8 +41,8 @@
 ;;		user=> (indexable-word? "1")
 ;;		false
 
-(require '[clojure.string :as string])
-(filter indexable-word? (string/split "A fine day it is to learn clojure" #"\W+"))
+(require '[clojure.string :as str])
+(filter indexable-word? (str/split "A fine day it is to learn clojure" #"\W+"))
 
 ;; the equivalent form is as follows:
 (filter (fn [w] (> (count w) 2)) (str/split "A find day it is to learn Clojure" #"\W+"))
@@ -54,14 +54,17 @@
         (filter indexable-word? (str/split text #"\W+"))))
 
 (defn make-greeter [aprefix]
-    (fn [username] (str aprefix ", " username)))
+    (fn [username] (clojure.core/str aprefix ", " username))) ;; avoid namespace pollution
 
-(defn default-greeting (make-greeter "Hello"))
-(defn aloha-greeting (make-greeter "Aloha!"))
+(def default-greeting (make-greeter "Hello"))
+(def aloha-greeting (make-greeter "Aloha!"))
 
 (defn square-corners [bottom left size]
     (let [top (+ bottom size)
           right (+ left size)]
         [[bottom left] [top left] [top right] [bottom right]]))
 
+(require '[clojure.string :as str])
+(defn ellipsize [words]
+    (let [[w1 w2 w3] (str/split words #"\s+")] (str/join " " [w1 w2 w3 "..."])))
 
