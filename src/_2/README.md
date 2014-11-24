@@ -45,26 +45,13 @@ The binding of the form `{fname :first-name}` tells Clojure
 to bind the `fname` to the `first-name` of the funciton argument.
 
 
+## About `Vars` in Clojure
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Vars should only ever be defined in an interactive context - such as a REPL
+- or within a CLojure source file as a way of defining named functions, other constant
+values and the like. In particular, top-level vars (that's globally accessiable vars mapping
+wihtin namespaces, as defined by `def` and its variants) should only ever be defined by 
+top-level expresions, never in the bodies of functions in the normal course of operation
+of a Clojure program
 
 
