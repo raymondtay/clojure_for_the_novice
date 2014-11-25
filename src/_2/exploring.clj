@@ -68,3 +68,41 @@
 (defn ellipsize [words]
     (let [[w1 w2 w3] (str/split words #"\s+")] (str/join " " [w1 w2 w3 "..."])))
 
+
+;; Note that many other forms (including fn, let, loop and try and any derivate of these
+;; such as defn) wrap their bodies in an implicit do expression, so that multiple
+;; inner expressions can be evaluated. For example, let expressions - like this 
+;; defines two locals - provide an implicit "do" context to their bodies
+
+(let [a (inc (rand-int 6))
+      b (inc (rand-int 6))]
+
+     (println (format "You rolled a %s and a %s" a b))
+     (+ a b))
+
+(let [a (inc (rand-int 6))
+      b (inc (rand-int 6))]
+    (do
+     (println (format "You rolled a %s and a %s" a b))
+     (+ a b)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

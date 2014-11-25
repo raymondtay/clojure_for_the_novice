@@ -55,3 +55,34 @@ top-level expresions, never in the bodies of functions in the normal course of o
 of a Clojure program
 
 
+## About `let` in clojure
+
+Let allows you to define named references that are lexically scoped to the extend ot eh 
+let expression. Said in another way, let defines locals. For example
+```
+(defn hypot 
+    [x y]
+    (let [x2 (* x x)
+          y2 (* y y)]
+         (Math/sqrt (+ x2 y2))))
+```
+
+There are many terms used to talk about named references established by let in Clojure parlance
++ Locals 
++ Local bindings
++ particular values are said to be let-bound
+
+Bindings and bo8und used in connection with let are entirely distinct
+from the binding macro, which controls scoped thread-local variables.
+
+`let` has two particular semantic wrinkles that are very different from locals you may be
+used to in other languages:
++ All locals are immutable. You can override a local binding within a nested let form
+  or a later binding of the same name within the same binding vector, but there is no way to bash out
+  a bound name and change its value within the scope of a single let form. This eliminates a source of common
+  errors and bugs w/o sacrificing capability:
++ let's binding vector is interpreted at compile time to provide optional destructuring of common collection types.
+  Destructuring can aid substantially in eliminating certain types of verbose code often associated with
+  working with collections provided as arguments to functions.
+
+
