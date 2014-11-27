@@ -54,6 +54,14 @@ Going back to our visual alignment of the destructuring form with the (in this c
 {a :a b :b} <-- in the expression
 {:a 5 :b 6} <-- in 'm'
 
+another one is the following (remember we are still referencing the m)
+(let [{f "foo"} m] (+ f 12)) <-- gives 100
+(let [{v 42} m] (if v 1 0)) <-- gives 0
+
+this surprised me a little which is destructuring by indexing into a structure i.e. m
+(let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] x) <-- gives -18 (the 3rd position in m)
+(let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] y) <-- gives 1 (the 8th position in m)
+
 ## About `Vars` in Clojure
 
 Vars should only ever be defined in an interactive context - such as a REPL
