@@ -44,6 +44,15 @@ a colelction and bind only the part you want.
 The binding of the form `{fname :first-name}` tells Clojure 
 to bind the `fname` to the `first-name` of the funciton argument.
 
+Another example is the following 
+```
+(def m {:a 5 :b 6 :c [7 8 9] :d {:e 10 :f 11} "foo" 88 42 false})
+(let [{a :a b :b} m] (+ a b)) 
+```
+Here we are binding the value for :a in the map to a, and the value for :b in the map to b.
+Going back to our visual alignment of the destructuring form with the (in this case partial)
+{a :a b :b} <-- in the expression
+{:a 5 :b 6} <-- in 'm'
 
 ## About `Vars` in Clojure
 
