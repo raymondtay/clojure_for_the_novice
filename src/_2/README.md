@@ -178,4 +178,23 @@ usually called 'rest arguments' or 'varargs'.
     (apply str (butlast rest)))
 ;; the reference to `butlast` is actually a macro, try (doc butlast).
 ```
+The 'seq' formed for the rest arguments can be destructured just like any other
+sequence, here we're destructuring arguments to make a function behave as if it
+had an explicitly defined zero-arg arity:
+```
+(defn make-user
+    [x & [rest]]
+    {:user-id (or user-id (str (java.util.UUID/randomUUID)))})
+```
+and a slightly more elaborate `make-user` function can be written (as in the book).
+```
+(defn make-user
+    [username & {:keys [email join-date]
+                :or {join-date (java.util.Date.)}}] 
+    {:username username
+     :join-date join-date
+     :email email
+     :exp-date (java.util.Date. (long (+ 2.592e9 (.getTime join-date))))})
+```
+
 
