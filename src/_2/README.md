@@ -62,6 +62,16 @@ this surprised me a little which is destructuring by indexing into a structure i
 (let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] x) <-- gives -18 (the 3rd position in m)
 (let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] y) <-- gives 1 (the 8th position in m)
 
+The following example has to do with using the let-forms to capture
+the rest of the sequence i.e. (let [... & param-name] data])
+
+```
+(def user-info ["testdata1" 2010 :name "Ray" :city "Singapore"])
+(let [[username account-year & extra-info] user-info
+      {:keys [name city]) (apply hash-map extra-info)]
+    (format "%s is in %s" name city))
+```
+
 ## About `Vars` in Clojure
 
 Vars should only ever be defined in an interactive context - such as a REPL
@@ -102,4 +112,70 @@ used to in other languages:
   Destructuring can aid substantially in eliminating certain types of verbose code often associated with
   working with collections provided as arguments to functions.
 
+## About anonymous functions in Clojure
+
+The anon-function has the following forms:
+```
+user=> (doc fn)
+-------------------------
+clojure.core/fn
+  (fn name? [params*] exprs*)
+  (fn name? ([params*] exprs*) +)
+Special Form
+  params => positional-params* , or positional-params* & next-param
+  positional-param => binding-form
+  next-param => binding-form
+  name => symbol
+
+  Defines a function
+
+  Please see http://clojure.org/special_forms#fn
+```
+A contrived example is the following:
+```
+(println (format "running anon-fn is %d" ((fn [x] x) 42)))
+```
+The function `fn` listed here is simply a value that hashes the given 
+argument to itself.
+Turns out we can define anon-fns which can consumes multiple arguments.
+and the way Clojure allows you to accomplish this is via a small trick
+i.e. allowing the name to be referenced; here's an example:
+```
+(def a-adder (fn adder 
+                ([x] (adder x 1))
+                ([x y] (+ x y))))
+```
+
+Here's an example of a mutually recursive function using the `letfn` form
+and before we do that, let's take a look at the documentation
+```
+user=> (doc letfn)
+-------------------------
+clojure.core/letfn
+  (letfn [fnspecs*] exprs*)
+Special Form
+  fnspec ==> (fname [params*] exprs) or (fname ([params*] exprs)+)
+
+  Takes a vector of function specs and a body, and generates a set of
+  bindings of functions to their names. All of the names are available
+  in all of the definitions of the functions, as well as the body.
+nil
+```
+Continuing with the example ...
+```
+(letfn [(odd? [n] (even? (dec n))) 
+        (even? [n] (or (zero? n) (odd? (dec n))))] (odd? 11))
+```
+## Variadic functions
+
+Functions can optionally gather all additional requirements used
+in calls to it into a sequence; this uses the same mechanisms
+and such fns are called "variadic" with gathered arguments
+usually called 'rest arguments' or 'varargs'.
+```
+(defn concat-rest
+    [x & rest]
+    (apply str (butlast rest)))
+;; the reference to `butlast` is actually a macro, try (doc butlast).
+```
 
