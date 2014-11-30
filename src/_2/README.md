@@ -197,4 +197,22 @@ and a slightly more elaborate `make-user` function can be written (as in the boo
      :exp-date (java.util.Date. (long (+ 2.592e9 (.getTime join-date))))})
 ```
 
+## Looping: loop and recur
+
+Clojure provides looping constructs and `doseq` and `dotimes` 
+all of which are built upon `recur`. `recur` transfers control to the local-most
+loop head without consuming stack space, which is defined either by `loop` or a function.
+
+```
+(loop [x 5] (if (neg? x) x (recur (dec x))))
+;; returns -1 when done
+```
+Loop heads are established by functions, in which case 'recur' rebinds the function's parameters using
+the values provided as arguments to recur:
+```
+(defn countdown [x]
+    (if (zero? x) :blastoff! 
+        (do (println x)
+            (recur (dec x)))))
+```
 
