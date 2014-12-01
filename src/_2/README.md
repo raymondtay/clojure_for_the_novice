@@ -62,6 +62,13 @@ this surprised me a little which is destructuring by indexing into a structure i
 (let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] x) <-- gives -18 (the 3rd position in m)
 (let [{ x 3 y 8} [12 0 0 -18 44 6 0 0 1]] y) <-- gives 1 (the 8th position in m)
 
+Another one which is an extension of the previous, but now its easier to understand it
+```
+user=> (let [{[x _ y] :c} m] (+ x y))
+16
+user=> m
+{"foo" 88, :c [7 8 9], :b 6, :d {:e 10, :f 11}, 42 false, :a 5}
+```
 The following example has to do with using the let-forms to capture
 the rest of the sequence i.e. (let [... & param-name] data])
 
