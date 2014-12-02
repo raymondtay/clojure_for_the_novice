@@ -16,3 +16,27 @@
 
 ;; returns {4 16, 3 9, 2 4, 1 1}
 
+;; turns out clojure supports function composition very much like how Haskell does it
+;; and Scala does it through the `comp`
+;; An example is the following
+
+(require '[clojure.string :as str]) ;; we want to load the clojure.string namespace and give a short name
+(def camel->keyword (comp keyword 
+        str/join
+        (partial interpose \-)
+        (partial map str/lower-case)
+        #(str/split % #"(?<=[a-z])(?=[A-Z])")))
+
+;; according to the book, we can achieve the previous camel->keyword 
+;; through the -> and ->> macros. Macros do not operate over functions
+;; rather, they re-arrange the code you provide to "thread" a value
+;; or collection as either the first/last argument in each form.
+
+(defn camel->keyword-2
+    [s]
+    (->> (str/split s #"(?<=[a-z])(?=[A-Z])")
+        (map str/lower-case)
+        (interpose \-)
+        str/join
+        keyword))
+
